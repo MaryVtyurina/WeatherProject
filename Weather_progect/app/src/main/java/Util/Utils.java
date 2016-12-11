@@ -9,6 +9,7 @@ import org.json.JSONObject;
 public class Utils {
     public static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
     public static final String ICON_URL = "http://api.openweathermap.org/img/w/";
+    public static final String BASE_URL_WEEK = "http://api.openweathermap.org/data/2.5/forecast/daily?q=";
 
     public static JSONObject getObject(String tagName, JSONObject jsonObject) throws JSONException{
         JSONObject jObj = jsonObject.getJSONObject(tagName);

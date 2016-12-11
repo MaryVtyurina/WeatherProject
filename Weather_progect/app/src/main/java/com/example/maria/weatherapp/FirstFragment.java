@@ -80,6 +80,7 @@ public class FirstFragment extends Fragment {
         protected Weather doInBackground(String... params) {
 
             String data = ((new WeatherHttpClient()).getWeatherData(params[0]));
+            System.out.println(data+"lalala");
 
             weather = JSONWeatherParser.getWeather(data);
 
