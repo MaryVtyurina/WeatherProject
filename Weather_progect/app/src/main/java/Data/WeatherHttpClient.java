@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.StringTokenizer;
 
@@ -16,11 +17,11 @@ import Util.Utils;
  */
 public class WeatherHttpClient {
     public String getWeatherData(String place) {
-        HttpsURLConnection connection = null;
+        HttpURLConnection connection = null;
         InputStream inputStream = null;
 
         try {
-            connection = (HttpsURLConnection) (new URL(Utils.BASE_URL + place)).openConnection();
+            connection = (HttpURLConnection) (new URL(Utils.BASE_URL + place)).openConnection();
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
             connection.setDoInput(true);
@@ -40,6 +41,7 @@ public class WeatherHttpClient {
             connection.disconnect();
 
             return stringBuffer.toString();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
