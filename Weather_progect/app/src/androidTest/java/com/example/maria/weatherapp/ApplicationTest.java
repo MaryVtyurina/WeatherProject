@@ -1,4 +1,4 @@
-package com.example.maria.weather_progect;
+package com.example.maria.weatherapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

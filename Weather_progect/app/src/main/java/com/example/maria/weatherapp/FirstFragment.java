@@ -1,41 +1,35 @@
-package com.example.maria.weather_progect;
+package com.example.maria.weatherapp;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
+import android.app.Fragment;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-//import android.R;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
-import android.support.v7.widget.Toolbar;
+import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.util.Log;
-import android.view.View;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 import Data.CityPreference;
 import Data.JSONWeatherParser;
 import Data.WeatherHttpClient;
-import Util.Utils;
 import model.Weather;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by Maria on 08/12/16.
+ */
+public class FirstFragment extends Fragment {
 
     private TextView cityName;
     private TextView temp;
@@ -51,25 +45,29 @@ public class MainActivity extends AppCompatActivity {
 
     Weather weather = new Weather();
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        cityName = (TextView) findViewById(R.id.cityText);
-        iconView = (ImageView) findViewById(R.id.thumbnailIcon);
-        temp = (TextView) findViewById(R.id.tempText);
-        description = (TextView) findViewById(R.id.cloudText);
-        humididty = (TextView) findViewById(R.id.humidText);
-        pressure = (TextView) findViewById(R.id.pressureText);
-        wind = (TextView) findViewById(R.id.windText);
-        sunrise = (TextView) findViewById(R.id.riseText);
-        sunset = (TextView) findViewById(R.id.setText);
-        updated = (TextView) findViewById(R.id.updateText);
+        View myView = inflater.inflate(R.layout.first_layout, container, false);
 
-//        CityPreference cityPreference = new CityPreference(MainActivity.this);
+        iconView = (ImageView) myView.findViewById(R.id.thumbnailIcon);
+        cityName = (TextView) myView. findViewById(R.id.cityText);
+        temp = (TextView) myView.findViewById(R.id.tempText);
+        description = (TextView) myView.findViewById(R.id.cloudText);
+        humididty = (TextView)myView. findViewById(R.id.humidText);
+        pressure = (TextView)myView. findViewById(R.id.pressureText);
+        wind = (TextView) myView.findViewById(R.id.windText);
+        sunrise = (TextView)myView. findViewById(R.id.riseText);
+        sunset = (TextView) myView.findViewById(R.id.setText);
+        updated = (TextView) myView.findViewById(R.id.updateText);
+
 
         renderWeatherData("Moscow,RU");
+
+
+        return myView;
     }
 
     public void renderWeatherData(String city) {
@@ -77,20 +75,7 @@ public class MainActivity extends AppCompatActivity {
         weatherTask.execute(new String[]{city + "&APPID=" + apikey});
     }
 
-//    private class DownloadImageAsyncTask extends AsyncTask<String, Void, Bitmap>{
-//        @Override
-//        protected Bitmap doInBackground(String... params) {
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Bitmap bitmap) {
-//            super.onPostExecute(bitmap);
-//        }
-//
-//    }
-
-    private class WeatherTask extends AsyncTask<String, Void, Weather>{
+    private class WeatherTask extends AsyncTask<String, Void, Weather> {
         @Override
         protected Weather doInBackground(String... params) {
 
@@ -103,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
             return weather;
         }
 
-        protected String convertDate(long unixSec){
-            Date date = new Date(unixSec*1000L); // *1000 is to convert seconds to milliseconds
+        protected String convertDate(long unixSec) {
+            Date date = new Date(unixSec * 1000L); // *1000 is to convert seconds to milliseconds
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); // the format of your date
             String formattedDate = sdf.format(date);
             return formattedDate;
@@ -114,11 +99,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Weather weather) {
             super.onPostExecute(weather);
 
-//            DateFormat df = DateFormat.getTimeInstance();
-
-//            String sunriseDate = df.format(new Date(weather.place.getSunrise()));
-//            String sunsetDate = df.format(new Date(weather.place.getSunset()));
-//            String updateDate = df.format(new Date(weather.place.getLastupdate()));
 
             DecimalFormat decimalFormat = new DecimalFormat("#.#");
             String tempFormat = decimalFormat.format(weather.currentCondition.getTemperature() - 274.15);
@@ -138,17 +118,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 //    private void showInputDialog(){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(FirstFragment.this);
 //        builder.setTitle("Change City");
 //
-//        final EditText cityInput = new EditText(MainActivity.this);
+//        final EditText cityInput = new EditText(FirstFragment.this);
 //        cityInput.setInputType(InputType.TYPE_CLASS_TEXT);
 //        cityInput.setHint("Portland,US");
 //        builder.setView(cityInput);
 //        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
 //            @Override
 //            public void onClick(DialogInterface dialog, int which) {
-//                CityPreference cityPreference = new CityPreference(MainActivity.this);
+//                CityPreference cityPreference = new CityPreference(FirstFragment.this);
 //                cityPreference.setCity(cityInput.getText().toString());
 //
 //                String newCity = cityPreference.getCity();
@@ -159,12 +139,12 @@ public class MainActivity extends AppCompatActivity {
 //        builder.show();
 //    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -174,12 +154,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.change_cityId){
-            return true;
-        }
+//        if (id == R.id.change_cityId){
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }
