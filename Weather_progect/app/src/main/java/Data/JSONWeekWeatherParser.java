@@ -26,9 +26,6 @@ public class JSONWeekWeatherParser {
 
             JSONArray array = jsonObject.getJSONArray("list");
 
-
-
-
             for (int i=0; i < array.length();i++) {
 
                 WeekWeather weekWeather = new WeekWeather();

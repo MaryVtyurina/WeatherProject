@@ -6,6 +6,15 @@ package model;
 public class WeekTemperature {
     private float minTemp;
     private float maxTemp;
+    private String getIcon;
+
+    public String getGetIcon() {
+        return getIcon;
+    }
+
+    public void setGetIcon(String getIcon) {
+        this.getIcon = getIcon;
+    }
 
     public float getMinTemp() {
         return minTemp;

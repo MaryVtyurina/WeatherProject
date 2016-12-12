@@ -63,8 +63,10 @@ public class FirstFragment extends Fragment {
         sunset = (TextView) myView.findViewById(R.id.setText);
         updated = (TextView) myView.findViewById(R.id.updateText);
 
+        CityPreference cityPreference = new CityPreference(getActivity());
 
-        renderWeatherData("Moscow,RU");
+
+        renderWeatherData("Moscow");
 
 
         return myView;
@@ -118,32 +120,32 @@ public class FirstFragment extends Fragment {
         }
     }
 
-//    private void showInputDialog(){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(FirstFragment.this);
-//        builder.setTitle("Change City");
-//
-//        final EditText cityInput = new EditText(FirstFragment.this);
-//        cityInput.setInputType(InputType.TYPE_CLASS_TEXT);
-//        cityInput.setHint("Portland,US");
-//        builder.setView(cityInput);
-//        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                CityPreference cityPreference = new CityPreference(FirstFragment.this);
-//                cityPreference.setCity(cityInput.getText().toString());
-//
-//                String newCity = cityPreference.getCity();
-//
-//                renderWeatherData(newCity);
-//            }
-//        });
-//        builder.show();
-//    }
+    private void showInputDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Change City");
+
+        final EditText cityInput = new EditText(getActivity());
+        cityInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        cityInput.setHint("Portland,US");
+        builder.setView(cityInput);
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CityPreference cityPreference = new CityPreference(getActivity());
+                cityPreference.setCity(cityInput.getText().toString());
+
+                String newCity = cityPreference.getCity();
+
+                renderWeatherData(newCity);
+            }
+        });
+        builder.show();
+    }
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.main, menu);
 //        return true;
 //    }
 
@@ -155,9 +157,9 @@ public class FirstFragment extends Fragment {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-//        if (id == R.id.change_cityId){
-//            return true;
-//        }
+        if (id == R.id.action_settings){
+            showInputDialog();
+        }
 
         return super.onOptionsItemSelected(item);
     }

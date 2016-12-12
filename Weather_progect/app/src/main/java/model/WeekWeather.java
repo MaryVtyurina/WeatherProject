@@ -9,4 +9,5 @@ public class WeekWeather {
     public WeekCondition weekCondition = new WeekCondition();
 
 
+
 }
