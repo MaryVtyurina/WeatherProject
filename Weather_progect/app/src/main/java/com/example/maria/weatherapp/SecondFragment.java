@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import Data.CityPreference;
 import Data.JSONWeekWeatherParser;
 import Data.WeekWeatherHttpClient;
 import model.RecyclerAdapter;
@@ -49,9 +50,21 @@ public class SecondFragment extends Fragment {
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
-//            days.add((TextView) myView. findViewById(R.id.day1));
 
-        renderWeatherData("Moscow");
+        Bundle bundle = this.getArguments();
+        System.out.println(bundle);
+        if (bundle != null) {
+            String i = bundle.getString("city");
+            System.out.println(i);
+            renderWeatherData(i);
+        }
+        else {
+
+            String city = "Moscow";
+
+            renderWeatherData(city);
+
+        }
 
         return myView;
 
@@ -99,12 +112,6 @@ public class SecondFragment extends Fragment {
             return weatherList;
         }
 
-//        protected String convertDate(long unixSec) {
-//            Date date = new Date(unixSec * 1000L); // *1000 is to convert seconds to milliseconds
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM"); // the format of your date
-//            String formattedDate = sdf.format(date);
-//            return formattedDate;
-//        }
 
         @Override
         protected void onPostExecute(List<WeekWeather> weather) {
@@ -115,13 +122,7 @@ public class SecondFragment extends Fragment {
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
                 String tempFormat = decimalFormat.format(weather.get(i).weekCondition.getMaxTemp() - 274.15);
                 String tempFormat2 = decimalFormat.format(weather.get(i).weekCondition.getMinTemp() - 274.15);
-//                days.get(i).setText(weather.get(i).place.getCity() + "," + weather.place.getCountry());
-//                temp.setText("  " + tempFormat + "C");
-
-//                days.get(i).setText(convertDate(weather.get(i).place.getData()) + "   " + tempFormat + "C    " +
-//                        tempFormat2 + "C"   + weather.get(i).weekCondition.getCondition() + "("
-//                        + weather.get(i).weekCondition.getDescription() + ")");
-                l.list_icon = weather.get(i).weekTemperature.getGetIcon();
+                l.list_icon = weather.get(i).weekCondition.getIconId();
                 l.list_data = convertDate(weather.get(i).place.getData());
                 l.desc = weather.get(i).weekCondition.getDescription();
                 l.max_temp = tempFormat + "C";
@@ -132,7 +133,6 @@ public class SecondFragment extends Fragment {
 
             RecyclerAdapter adapter = new RecyclerAdapter(getActivity(), wlist);
             recyclerView.setAdapter(adapter);
-            recyclerView.setHasFixedSize(true);
             adapter.notifyDataSetChanged();
 
         }

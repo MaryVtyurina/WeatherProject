@@ -45,6 +45,7 @@ public class JSONWeekWeatherParser {
                 weekPlace.setData(Utils.getInt("dt", w));
                 weekWeather.weekCondition.setWeatherId(Utils.getInt("id", jsonWeather));
                 weekWeather.weekCondition.setDescription(Utils.getString("description", jsonWeather));
+                weekWeather.weekCondition.setIconId(Utils.getString("icon", jsonWeather));
                 weekWeather.weekCondition.setCondition(Utils.getString("main", jsonWeather));
 
                 JSONObject tempObj = Utils.getObject("temp", w);

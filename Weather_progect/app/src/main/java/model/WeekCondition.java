@@ -6,6 +6,16 @@ package model;
 public class WeekCondition {
 
     private int weatherId;
+    private String iconId;
+
+    public String getIconId() {
+        return iconId;
+    }
+
+    public void setIconId(String iconId) {
+        this.iconId = iconId;
+    }
+
     private String condition;
     private String description;
     private float maxTemp;

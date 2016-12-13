@@ -1,9 +1,12 @@
 package com.example.maria.weatherapp;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.InputType;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+
+import Data.CityPreference;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +65,45 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void showInputDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Change city");
+
+        final EditText cityInput = new EditText(MainActivity.this);
+        cityInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        cityInput.setHint("London");
+        builder.setView(cityInput);
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CityPreference cityPreference = new CityPreference(MainActivity.this);
+                cityPreference.setCity(cityInput.getText().toString());
+                String newCity = cityPreference.getCity();
+
+//                SecondFragment secondFragment = new SecondFragment();
+//                Bundle bundle2 = new Bundle();
+//                bundle2.putString("city", newCity);
+//                secondFragment.setArguments(bundle2);
+//
+//                FragmentManager fragmentManager2 = getFragmentManager();
+//                fragmentManager2.beginTransaction().replace(R.id.content_frame, secondFragment).commit();
+
+                FirstFragment firstFragment = new FirstFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("city", newCity);
+                firstFragment.setArguments(bundle);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, firstFragment).commit();
+
+
+            }
+        });
+        builder.show();
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -75,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            showInputDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -98,11 +143,6 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame
                             , new SecondFragment())
-                    .commit();
-        } else if (id == R.id.nav_third_layout) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame
-                            , new ThirdFragment())
                     .commit();
         }
 

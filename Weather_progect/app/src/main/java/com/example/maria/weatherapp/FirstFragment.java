@@ -43,6 +43,24 @@ public class FirstFragment extends Fragment {
     private TextView updated;
     private String apikey = "415250147bf526a105828f2a4a7e6902";
 
+    int[] icons = {R.drawable.icon_01d,
+            R.drawable.icon_02d,
+            R.drawable.icon_03d,
+            R.drawable.icon_04d,
+            R.drawable.icon_09d,
+            R.drawable.icon_10d,
+            R.drawable.icon_11d,
+            R.drawable.icon_13d,
+            R.drawable.icon_50d};
+    int[] iconss = {R.drawable.icon_01n,
+            R.drawable.icon_02n,
+            R.drawable.icon_03n,
+            R.drawable.icon_04n,
+            R.drawable.icon_09n,
+            R.drawable.icon_10n,
+            R.drawable.icon_11n,
+            R.drawable.icon_13n};
+
     Weather weather = new Weather();
 
 
@@ -63,12 +81,20 @@ public class FirstFragment extends Fragment {
         sunset = (TextView) myView.findViewById(R.id.setText);
         updated = (TextView) myView.findViewById(R.id.updateText);
 
-        CityPreference cityPreference = new CityPreference(getActivity());
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String i = bundle.getString("city");
+            System.out.println(i);
+            renderWeatherData(i);
+        }
+        else {
 
-        renderWeatherData("Moscow");
+            String city = "Moscow";
 
+            renderWeatherData(city);
 
+        }
         return myView;
     }
 
@@ -82,7 +108,6 @@ public class FirstFragment extends Fragment {
         protected Weather doInBackground(String... params) {
 
             String data = ((new WeatherHttpClient()).getWeatherData(params[0]));
-            System.out.println(data+"lalala");
 
             weather = JSONWeatherParser.getWeather(data);
 
@@ -117,48 +142,74 @@ public class FirstFragment extends Fragment {
             description.setText("Condition: " + weather.currentCondition.getCondition() + "("
                     + weather.currentCondition.getDescription() + ")");
 
+            System.out.println(weather.currentCondition.getIcon());
+            switch (weather.currentCondition.getIcon()) {
+                case "01d":
+                    iconView.setImageResource(icons[0]);
+                    break;
+                case "02d":
+                    iconView.setImageResource(icons[1]);
+                    break;
+                case "03d":
+                    iconView.setImageResource(icons[2]);
+                    break;
+                case "04d":
+                    iconView.setImageResource(icons[3]);
+                    break;
+                case "09d":
+                    iconView.setImageResource(icons[4]);
+                    break;
+                case "10d":
+                    iconView.setImageResource(icons[5]);
+                    break;
+                case "11d":
+                    iconView.setImageResource(icons[6]);
+                    break;
+                case "13d":
+                    iconView.setImageResource(icons[7]);
+                    break;
+                case "50d":
+                    iconView.setImageResource(icons[8]);
+                    break;
+                case "01n":
+                    iconView.setImageResource(iconss[0]);
+                    break;
+                case "02n":
+                    iconView.setImageResource(iconss[1]);
+                    break;
+                case "03n":
+                    iconView.setImageResource(iconss[2]);
+                    break;
+                case "04n":
+                    iconView.setImageResource(iconss[3]);
+                    break;
+                case "09n":
+                    iconView.setImageResource(iconss[4]);
+                    break;
+                case "10n":
+                    iconView.setImageResource(iconss[5]);
+                    break;
+                case "11n":
+                    iconView.setImageResource(iconss[6]);
+                    break;
+                case "13n":
+                    iconView.setImageResource(iconss[7]);
+                    break;
+                case "50n":
+                    iconView.setImageResource(icons[8]);
+                    break;
+            }
         }
     }
 
-    private void showInputDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Change City");
-
-        final EditText cityInput = new EditText(getActivity());
-        cityInput.setInputType(InputType.TYPE_CLASS_TEXT);
-        cityInput.setHint("Portland,US");
-        builder.setView(cityInput);
-        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CityPreference cityPreference = new CityPreference(getActivity());
-                cityPreference.setCity(cityInput.getText().toString());
-
-                String newCity = cityPreference.getCity();
-
-                renderWeatherData(newCity);
-            }
-        });
-        builder.show();
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings){
-            showInputDialog();
+//            showInputDialog();
         }
 
         return super.onOptionsItemSelected(item);
