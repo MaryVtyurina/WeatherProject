@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import Data.CityActive;
 import Data.CityPreference;
 import Data.JSONWeekWeatherParser;
 import Data.WeekWeatherHttpClient;
@@ -50,21 +51,26 @@ public class SecondFragment extends Fragment {
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
+//        List<CityActive> cityActiveList = CityActive.getAllWeather();
+//        String city = cityActiveList.get(0).getName();
+//        renderWeatherData(city);
+        CityPreference cityPreference = new CityPreference(this.getActivity());
+        renderWeatherData(cityPreference.getCity());
 
-        Bundle bundle = this.getArguments();
-        System.out.println(bundle);
-        if (bundle != null) {
-            String i = bundle.getString("city");
-            System.out.println(i);
-            renderWeatherData(i);
-        }
-        else {
-
-            String city = "Moscow";
-
-            renderWeatherData(city);
-
-        }
+//        Bundle bundle = this.getArguments();
+//        System.out.println(bundle);
+//        if (bundle != null) {
+//            String i = bundle.getString("city");
+//            System.out.println(i);
+//            renderWeatherData(i);
+//        }
+//        else {
+//
+//            String city = "Moscow";
+//
+//            renderWeatherData(city);
+//
+//        }
 
         return myView;
 
