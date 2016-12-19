@@ -39,15 +39,6 @@ public class MainActivity extends AppCompatActivity
                         , new FirstFragment())
                 .commit();
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,9 +71,17 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                String newCity;
                 CityPreference cityPreference = new CityPreference(MainActivity.this);
-                cityPreference.setCity(cityInput.getText().toString());
-                String newCity = cityPreference.getCity();
+                Log.e("TAG", "Preferences :" + cityPreference.getCity());
+                if (cityInput.getText().toString().isEmpty())
+                {
+                    newCity = cityPreference.getCity();
+                }
+                else {
+                    cityPreference.setCity(cityInput.getText().toString());
+                    newCity = cityPreference.getCity();
+                }
                 System.out.println(cityInput.getText().toString());
                 CityActive cityActive = new CityActive();
                 ActiveAndroid.beginTransaction();
@@ -90,9 +89,6 @@ public class MainActivity extends AppCompatActivity
                 cityActive.save();
                 ActiveAndroid.setTransactionSuccessful();
                 ActiveAndroid.endTransaction();
-//                new Delete().from(CityActive.class).execute();
-//                cityActive.setName(cityInput.getText().toString());
-//                cityActive.save();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new FirstFragment()).commit();
 

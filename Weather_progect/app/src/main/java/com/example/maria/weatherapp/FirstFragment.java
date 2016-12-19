@@ -83,27 +83,9 @@ public class FirstFragment extends Fragment {
         sunset = (TextView) myView.findViewById(R.id.setText);
         updated = (TextView) myView.findViewById(R.id.updateText);
 
-//        List<CityActive> cityActiveList = CityActive.getAllWeather();
-//        String cityin = cityActiveList.get(0).getName();
-//        Log.e("TAG", "cityinput" + cityActiveList.get(0).getName());
-//        renderWeatherData(cityin);
-
         CityPreference cityPreference = new CityPreference(this.getActivity());
         renderWeatherData(cityPreference.getCity());
-
-//        Bundle bundle = this.getArguments();
-//        if (bundle != null) {
-//            String i = bundle.getString("city");
-//            System.out.println(i);
-//            renderWeatherData(i);
-//        }
-//        else {
-//
-//            String city = "Moscow";
-//
-//            renderWeatherData(city);
-//
-//        }
+        //renderWeatherData("Moscow");
         return myView;
     }
 
@@ -220,7 +202,6 @@ public class FirstFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings){
-//            showInputDialog();
         }
 
         return super.onOptionsItemSelected(item);

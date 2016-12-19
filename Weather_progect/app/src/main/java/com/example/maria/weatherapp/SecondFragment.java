@@ -51,26 +51,9 @@ public class SecondFragment extends Fragment {
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
-//        List<CityActive> cityActiveList = CityActive.getAllWeather();
-//        String city = cityActiveList.get(0).getName();
-//        renderWeatherData(city);
+
         CityPreference cityPreference = new CityPreference(this.getActivity());
         renderWeatherData(cityPreference.getCity());
-
-//        Bundle bundle = this.getArguments();
-//        System.out.println(bundle);
-//        if (bundle != null) {
-//            String i = bundle.getString("city");
-//            System.out.println(i);
-//            renderWeatherData(i);
-//        }
-//        else {
-//
-//            String city = "Moscow";
-//
-//            renderWeatherData(city);
-//
-//        }
 
         return myView;
 
@@ -151,10 +134,6 @@ public class SecondFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.change_cityId){
-//            return true;
-//        }
 
         return super.onOptionsItemSelected(item);
     }
